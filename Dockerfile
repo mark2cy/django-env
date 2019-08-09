@@ -12,6 +12,7 @@ RUN echo "set nu" >> /etc/vim/vimrc
 RUN pip install --upgrade pip
 RUN pip install django
 RUN pip install psycopg2
+RUN pip install django-bootstrap3
 #RUN pip install -r requirements.txt
 RUN echo "alias ll='ls -al'" >> /etc/bash.bashrc
 #RUN django-admin startproject mysite
