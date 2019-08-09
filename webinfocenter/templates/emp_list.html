@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>List Employee Page</title>
+</head>
+<body>
+{% extends "./base.html" %}
+{% block content %}
+    <div class="container theme-showcase margin-top-navbar" role="main">
+      <!-- employee list-->
+      <div class="page-header">
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form" method="get" action="/emp_search/">
+            <div class="form-group">
+              <input name="name" type="text" placeholder="Employee Name" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+           <form class="container" method="post" action="{% url 'dept_emp:emp_delete' %}">
+            <!-- avoid CSRF verification failed error. -->
+            {% csrf_token %}
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>id</th>
+                    <th>User Name</th>
+                    <th>Department</th>
+                    <th>Mobile</th>
+                    <th>Salary</th>
+                    <th>Onboard Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for emp in emp_list %}
+                    <tr>
+                      <td><input type="checkbox" id="emp_{{ emp.id }}" name="emp_{{ emp.id }}"></td>
+                      <td>{{ emp.id }}</td>
+                      <td>{{ emp.user.username }}</td>
+                      <td>{{ emp.dept.dept_name }}</td>
+                      <td>{{ emp.emp_mobile }}</td>
+                      <td>{{ emp.emp_salary }}</td>
+                      <td>{{ emp.emp_onboard_date }}</td>
+                    </tr>
+                 {% endfor %}
+                    <tr>
+                        <td colspan="7" align="right">
+                           <a class="btn btn-primary" href="{% url 'dept_emp:emp_pre_add' %}">Add</a>
+                           <input type="submit" class="btn btn-primary" value="Delete" />
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+           </form>
+        </div>
+      </div>
+{% endblock %}
+</body>
+</html>
+

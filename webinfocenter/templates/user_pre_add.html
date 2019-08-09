@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add User Page</title>
+</head>
+<body>
+{% extends "./base.html" %}
+{% block content %}
+        <form class="container margin-top-navbar-large" method="post" action="{% url 'dept_emp:user_add' %}">
+            <!-- avoid CSRF verification failed error. -->
+            {% csrf_token %}
+            <div class="form-group">
+               <label>User Name:</label>
+                {% if error_message_username %}
+                    <font color="red">{{ error_message_username }}</font><br/>
+                {% endif %}
+                {% if error_message %}
+                    <font color="red">{{ error_message }}</font><br/>
+                {% endif %}
+               <input id="name" name="name" type="text" placeholder="User Name" class="form-control" value="{{ user.username }}">
+            </div>
+            <div class="form-group">
+              <label>Password:</label>
+                {% if error_message_password %}
+                    <font color="red">{{ error_message_password }}</font><br/>
+                {% endif %}
+              <input name="password" type="password" placeholder="Password" class="form-control" value="{{ user.password }}">
+            </div>
+            <div class="form-group">
+              <label>Email:</label>
+                {% if error_message_email %}
+                    <font color="red">{{ error_message_email }}</font><br/>
+                {% endif %}
+              <input name="email" type="text" placeholder="Email" class="form-control" value="{{ user.email }}">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-right">Add</button>
+            </div>
+        </form>
+{% endblock %}
+</body>
+</html>
+

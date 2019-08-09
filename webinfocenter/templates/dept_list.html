@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>List Department Page</title>
+</head>
+<body>
+{% extends "./base.html" %}
+{% block content %}
+    <div class="container theme-showcase margin-top-navbar" role="main">
+      <!-- search department -->
+      <div class="page-header">
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form" method="get" action="/dept_search/">
+            <div class="form-group">
+              <input name="name" type="text" placeholder="Department Name" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
+        </div>
+      </div>
+      <!-- department list-->
+      <div class="row">
+        <div class="col-md-12">
+          <form class="container" method="post" action="{% url 'dept_emp:dept_delete' %}">
+            <!-- avoid CSRF verification failed error. -->
+            {% csrf_token %}
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for dept in dept_list %}
+                    <tr>
+                      <td><input type="checkbox" id="dept_{{ dept.id }}" name="dept_{{ dept.id }}"></td>
+                      <td>{{ dept.id }}</td>
+                      <td>{{ dept.dept_name }}</td>
+                      <td>{{ dept.dept_desc }}</td>
+                    </tr>
+                 {% endfor %}
+                    <tr>
+                        <td colspan="4" align="right">
+                           <a class="btn btn-primary" href="{% url 'dept_emp:dept_pre_add' %}">Add</a>
+                           <input type="submit" class="btn btn-primary" value="Delete" />
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+          </form>
+        </div>
+      </div>
+{% endblock %}
+</body>
+</html>

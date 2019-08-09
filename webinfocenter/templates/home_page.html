@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Bootstrap3 Example Home Page</title>
+</head>
+<body>
+{% extends "./base.html" %}
+{% block content %}
+    <div class="row">
+        <h3 style="margin-top: 80px">
+            Login with Django built-in authentication user account and click above menu item to use it.
+        </h3>
+        <form class="container" method="post" action="{% url 'dept_emp:user_login' %}">
+            {% if error_message %}
+                <font color="red">{{ error_message }}</font><br/>
+            {% endif %}
+            <!-- avoid CSRF verification failed error. -->
+            {% csrf_token %}
+            <div class="form-group">
+               <label>User Name:</label>
+                {% if error_message_login_user_name %}
+                    <font color="red">{{ error_message_login_user_name }}</font><br/>
+                {% endif %}
+               <input name="username" type="text" placeholder="User Name" class="form-control" value="{{ user.username }}">
+            </div>
+            <div class="form-group">
+              <label>Password:</label>
+                {% if error_message_login_password %}
+                    <font color="red">{{ error_message_login_password }}</font><br/>
+                {% endif %}
+              <input name="password" type="password" placeholder="Password" class="form-control" value="{{ user.password }}">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-right">Login</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+</body>
+</html>
+

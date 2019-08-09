@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Employee Page</title>
+</head>
+<body>
+{% extends "./base.html" %}
+{% block content %}
+        <form class="container margin-top-navbar-large" method="post" action="{% url 'dept_emp:emp_add' %}">
+            <!-- avoid CSRF verification failed error. -->
+            {% csrf_token %}
+            <div class="form-group">
+               <label>User:</label>
+               <select class="form-control" name="emp_user_id" >
+                   {% for user in user_list %}
+                         <option value="{{ user.id }}"
+                         {% if user.id == emp.user.id %}
+                            selected
+                         {% endif %}
+                         >
+                             {{ user.username }}
+                         </option>
+                   {% endfor %}
+               </select>
+            </div>
+            <div class="form-group">
+               <label>Department:</label>
+               <select class="form-control" name="emp_dept_id">
+                   {% for dept in dept_list %}
+                      <option value="{{ dept.id }}"
+                      {% if dept.id == emp.dept.id %}
+                            selected
+                         {% endif %}
+                      >
+                          {{ dept.dept_name }}
+                      </option>
+                   {% endfor %}
+               </select>
+            </div>
+            <div class="form-group">
+              <label>Employee Mobile:</label>
+                {% if error_message_emp_mobile %}
+                    <font color="red">{{ error_message_emp_mobile }}</font><br/>
+                {% endif %}
+              <input name="emp_mobile" type="text" placeholder="Employee Mobile" class="form-control" value="{{ emp.emp_mobile }}">
+            </div>
+            <div class="form-group">
+              <label>Employee Salary:</label>
+              <input name="emp_salary" type="text" placeholder="Employee Salary" class="form-control" value="{{ emp.emp_salary }}">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-right">Add</button>
+            </div>
+        </form>
+{% endblock %}
+</body>
+</html>

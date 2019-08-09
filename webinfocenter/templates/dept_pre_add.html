@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Department Page</title>
+</head>
+<body>
+{% extends "./base.html" %}
+{% block content %}
+        <form class="container margin-top-navbar-large" method="post" action="{% url 'dept_emp:dept_add' %}">
+            {% if error_message %}
+                <font color="red">{{ error_message }}</font><br/>
+            {% endif %}
+            <!-- avoid CSRF verification failed error. -->
+            {% csrf_token %}
+            <div class="form-group">
+               <label>Department Name:</label>
+                {% if error_message_dept_name %}
+                    <font color="red">{{ error_message_dept_name }}</font><br/>
+                {% endif %}
+               <input name="dept_name" type="text" placeholder="Department Name" class="form-control" value="{{ dept.dept_name }}">
+            </div>
+            <div class="form-group">
+              <label>Department Description:</label>
+              <input name="dept_desc" type="text" placeholder="Department Description" class="form-control" value="{{ dept.dept_desc }}">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-right">Add</button>
+            </div>
+        </form>
+{% endblock %}
+</body>
+</html>
+

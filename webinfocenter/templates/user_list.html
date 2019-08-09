@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>List User Page</title>
+</head>
+<body>
+{% extends "./base.html" %}
+{% block content %}
+    <div class="container theme-showcase margin-top-navbar" role="main">
+      <!-- search user -->
+      <div class="page-header">
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form" method="get" action="/dept_search/">
+            <div class="form-group">
+              <input name="name" type="text" placeholder="User Name" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
+        </div>
+      </div>
+      <!-- user list-->
+      <div class="row">
+        <div class="col-md-12">
+          <form class="container" method="post" action="{% url 'dept_emp:user_delete' %}">
+            <!-- avoid CSRF verification failed error. -->
+            {% csrf_token %}
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Is Staff</th>
+                    <th>Is Active</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in user_list %}
+                    <tr>
+                      <td><input type="checkbox" id="user_{{ user.id }}" name="user_{{ user.id }}"></td>
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.is_staff }}</td>
+                      <td>{{ user.is_active }}</td>
+                    </tr>
+                 {% endfor %}
+                    <tr>
+                        <td colspan="6" align="right">
+                           <a class="btn btn-primary" href="{% url 'dept_emp:user_pre_add' %}">Add</a>
+                           <input type="submit" class="btn btn-primary" value="Delete" />
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+          </form>
+        </div>
+      </div>
+{% endblock %}
+</body>
+</html>
+

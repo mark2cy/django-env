@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+LOGIN_URL = '/dept_emp'
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'workhours',
+    'bootstrap3',
+    'dept_emp',
 ]
 
 MIDDLEWARE = [
